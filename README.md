@@ -18,7 +18,7 @@ Basic bookings and reservations application built by GoLang
 - Go to main directory and run the following code
 
 ```
-go test 0v ./...
+go test -v ./...
 ```
 
 - Check the coverage testing by running the following code
