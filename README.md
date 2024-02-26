@@ -43,3 +43,9 @@ go coverage
   ...
 }
 ```
+
+## Email testing
+Check out the following github. This repo can simulate the email SMTP testing on your local machine: [mailhog/MailHog](https://github.com/mailhog/MailHog)
+
+## HTML template
+Email template from Foundation Framework: [Foundation for Emails](https://get.foundation/emails/getting-started.html)
