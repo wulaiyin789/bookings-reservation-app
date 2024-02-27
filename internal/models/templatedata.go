@@ -3,6 +3,7 @@ package models
 import "github.com/tsawler/bookings-app/internal/forms"
 
 // TemplateData holds data sent from handlers to templates
+// IsAuth: Greater than 0, then login. Otherwise, unauthenticated
 type TemplateData struct {
 	StringMap map[string]string
 	IntMap    map[string]int
@@ -13,4 +14,5 @@ type TemplateData struct {
 	Warning   string
 	Error     string
 	Form      *forms.Form
+	IsAuth    int
 }

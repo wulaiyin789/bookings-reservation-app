@@ -2,9 +2,10 @@ package helpers
 
 import (
 	"fmt"
-	"github.com/tsawler/bookings-app/internal/config"
 	"net/http"
 	"runtime/debug"
+
+	"github.com/tsawler/bookings-app/internal/config"
 )
 
 var app *config.AppConfig
@@ -23,4 +24,10 @@ func ServerError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
 	app.ErrorLog.Println(trace)
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+}
+
+func IsAuthenticated(r *http.Request) bool {
+	exists := app.Session.Exists(r.Context(), "user_id")
+
+	return exists
 }
