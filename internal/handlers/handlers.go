@@ -176,6 +176,13 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	form.MinLength("first_name", 3)
 	form.IsEmail("email")
 
+	sd := reservation.StartDate.Format("2006-01-02")
+	ed := reservation.EndDate.Format("2006-01-02")
+
+	stringMap := make(map[string]string)
+	stringMap["start_date"] = sd
+	stringMap["end_date"] = ed
+
 	if !form.Valid() {
 		// data := make(map[string]interface{})
 		// data["reservation"] = reservation
@@ -190,8 +197,9 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		// if we use here http.Error(w, "error message", http.StatusSeeOther) then it writes directly to response body this message, precisely above html code from render.Template function. This way, browser can't understand and render the page correctly and results in blank screen with pure html code. But w.WriteHeader only writes status code to header and doesn't touch body content. Thus, we get working app and passing tests.
 		w.WriteHeader(http.StatusSeeOther)
 		render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
-			Form: form,
-			Data: data,
+			Form:      form,
+			Data:      data,
+			StringMap: stringMap,
 		})
 		return
 	}
@@ -689,7 +697,7 @@ func (m *Repository) AdminPostShowReservation(w http.ResponseWriter, r *http.Req
 	if year == "" {
 		http.Redirect(w, r, fmt.Sprintf("/admin/reservations-%s", src), http.StatusSeeOther)
 	} else {
-		http.Redirect(w, r, fmt.Sprintf("/admin/reservations-calendar?y=%d&m=%d", year, month), http.StatusSeeOther)
+		http.Redirect(w, r, fmt.Sprintf("/admin/reservations-calendar?y=%s&m=%s", year, month), http.StatusSeeOther)
 	}
 }
 
